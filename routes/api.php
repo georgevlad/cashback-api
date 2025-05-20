@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\MerchantController;
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -42,3 +45,37 @@ Route::post('/email/verification-notification', [EmailVerificationNotificationCo
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth:sanctum')
     ->name('logout');
+
+
+Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
+Route::get('/categories-latest', [CategoryController::class, 'latest']);
+Route::get('/categories-featured', [CategoryController::class, 'latest']); //TODO - implement featured flag
+
+
+Route::apiResource('merchants', MerchantController::class)->only(['index', 'show']);
+Route::get('/merchants-latest', [MerchantController::class, 'latest']);
+Route::get('/merchants-featured', [MerchantController::class, 'latest']); //TODO - implement featured flag
+
+Route::apiResource('products', ProductController::class)->only(['index', 'show']);
+Route::get('/products-latest', [ProductController::class, 'latest']);
+Route::get('/products-featured', [ProductController::class, 'latest']); //TODO - implement featured flag
+
+
+//TODO
+/**
+ * Get homepage top categories
+ * Get homepage featured categories
+ * Get homepage merchants
+ * Get homepage products
+ *
+ * Get all categories
+ * Get all merchants
+ * Get all products
+ *
+ * Get merchants by category
+ * Get products by category
+ * Get products by merchant
+ *
+ * Get product details
+ * Get merchant details
+ */
