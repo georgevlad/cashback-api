@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
-
+use App\Helpers\ApiResponse;
+use Illuminate\Support\Facades\Validator;
 class NewPasswordController extends Controller
 {
     /**
@@ -19,35 +20,29 @@ class NewPasswordController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)
     {
-        $request->validate([
-            'token' => ['required'],
-            'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        $validator = Validator::make($request->all(), [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:6|confirmed',
         ]);
 
-        // Here we will attempt to reset the user's password. If it is successful we
-        // will update the password on an actual user model and persist it to the
-        // database. Otherwise we will parse the error and return the response.
+        if ($validator->fails()) {
+            return ApiResponse::error(__('messages.validation_error'), $validator->errors(), 422);
+        }
+
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($request->string('password')),
-                    'remember_token' => Str::random(60),
-                ])->save();
-
-                event(new PasswordReset($user));
+            function (User $user, $password) {
+                $user->forceFill(['password' => Hash::make($password)])->save();
             }
         );
 
-        if ($status != Password::PASSWORD_RESET) {
-            throw ValidationException::withMessages([
-                'email' => [__($status)],
-            ]);
+        if ($status === Password::PASSWORD_RESET) {
+            return ApiResponse::success([], __('messages.password_reset_success'));
         }
 
-        return response()->json(['status' => __($status)]);
+        return ApiResponse::error(__('messages.password_reset_failed'), [], 400);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\MerchantController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
@@ -13,9 +14,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 
 // Authenticated user info (requires Sanctum token)
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')->get('/user', [ProfileController::class, 'show']);
 
 // Guest routes
 Route::middleware('guest')->group(function () {

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Helpers\ApiResponse;
+
 
 class EmailVerificationNotificationController extends Controller
 {
@@ -20,6 +22,6 @@ class EmailVerificationNotificationController extends Controller
 
         $request->user()->sendEmailVerificationNotification();
 
-        return response()->json(['status' => 'verification-link-sent']);
+        return ApiResponse::success([], __('messages.verification_email_sent'));
     }
 }

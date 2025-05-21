@@ -11,37 +11,54 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
+use App\Helpers\ApiResponse;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): JsonResponse
+    public function store(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-        if (! $user || ! Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
+        if ($validator->fails()) {
+            return ApiResponse::error(
+                __('messages.validation_error'),
+                $validator->errors(),
+                422
+            );
         }
 
-        $token = $user->createToken('api-token')->plainTextToken;
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return ApiResponse::error(__('messages.invalid_credentials'), [], 401);
+        }
 
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ]);
+        $user = Auth::user();
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return ApiResponse::success(
+            [
+                'token' => $token,
+                'user' => $user
+            ],
+            __('messages.login_success')
+        );
     }
 
     /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request): Response
+    public function destroy(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->noContent();
+        return ApiResponse::success([], __('messages.logout_success'));
     }
+
 }

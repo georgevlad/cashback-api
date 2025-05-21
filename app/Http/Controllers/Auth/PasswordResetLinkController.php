@@ -7,6 +7,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
+use App\Helpers\ApiResponse;
+use Illuminate\Support\Facades\Validator;
+
 
 class PasswordResetLinkController extends Controller
 {
@@ -17,9 +20,13 @@ class PasswordResetLinkController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $request->validate([
-            'email' => ['required', 'email'],
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
         ]);
+
+        if ($validator->fails()) {
+            return ApiResponse::error(__('messages.validation_error'), $validator->errors(), 422);
+        }
 
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
@@ -29,11 +36,10 @@ class PasswordResetLinkController extends Controller
         );
 
         if ($status != Password::RESET_LINK_SENT) {
-            throw ValidationException::withMessages([
-                'email' => [__($status)],
-            ]);
+            return ApiResponse::error(__('messages.reset_link_failed'), [], 400);
         }
 
-        return response()->json(['status' => __($status)]);
+        return ApiResponse::success([], __('messages.reset_link_sent'));
+
     }
 }
