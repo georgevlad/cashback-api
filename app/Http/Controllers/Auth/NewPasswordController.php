@@ -13,6 +13,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use App\Helpers\ApiResponse;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 class NewPasswordController extends Controller
 {
     /**
