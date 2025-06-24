@@ -14,4 +14,5 @@ return [
     'password_reset_failed' => 'Failed to reset password. Token may be invalid or expired.',
     'invalid_credentials' => 'Invalid credentials provided.',
     'profile_retrieved' => 'User profile retrieved successfully.',
+    'profile_updated' => 'User profile updated successfully.',
 ];

@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 
 // Authenticated user info (requires Sanctum token)
 Route::middleware('auth:sanctum')->get('/user', [ProfileController::class, 'show']);
+Route::middleware('auth:sanctum')->put('/user', [ProfileController::class, 'update']);
 
 // Guest routes
 Route::middleware('guest')->group(function () {
