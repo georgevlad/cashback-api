@@ -38,7 +38,16 @@ class CategoryController extends Controller
     // Method to get the details of a single category
     public function details(Category $category)
     {
-        return ApiResponse::success(new CategoryResource($category), 'Category details retrieved successfully.');
+        // Fetch 4 random categories excluding the one being shown
+        $related = Category::where('id', '!=', $category->id)
+            ->inRandomOrder()
+            ->take(4)
+            ->get();
+
+        return ApiResponse::success([
+            'item' => new CategoryResource($category),
+            'related' => CategoryResource::collection($related),
+        ], 'Category details retrieved successfully.');
     }
 
 
