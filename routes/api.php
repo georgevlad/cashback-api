@@ -50,15 +50,18 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
 Route::get('/categories-latest', [CategoryController::class, 'latest']);
 Route::get('/categories-featured', [CategoryController::class, 'latest']); //TODO - implement featured flag
+Route::get('/categories/{category}/details', [CategoryController::class, 'details']);
 
 
 Route::apiResource('merchants', MerchantController::class)->only(['index', 'show']);
 Route::get('/merchants-latest', [MerchantController::class, 'latest']);
 Route::get('/merchants-featured', [MerchantController::class, 'latest']); //TODO - implement featured flag
+Route::get('/merchants/{merchant}/details', [MerchantController::class, 'details']);
 
 Route::apiResource('products', ProductController::class)->only(['index', 'show']);
 Route::get('/products-latest', [ProductController::class, 'latest']);
 Route::get('/products-featured', [ProductController::class, 'latest']); //TODO - implement featured flag
+Route::get('/products/{product}/details', [ProductController::class, 'details']);
 
 
 //TODO

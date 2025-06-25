@@ -35,6 +35,12 @@ class CategoryController extends Controller
         return ApiResponse::success(CategoryResource::collection($latestCategories), __('messages.categories_retrieved'));
     }
 
+    // Method to get the details of a single category
+    public function details(Category $category)
+    {
+        return ApiResponse::success(new CategoryResource($category), 'Category details retrieved successfully.');
+    }
+
 
 
 
