@@ -48,4 +48,19 @@ class MerchantController extends Controller
         return ApiResponse::success(MerchantResource::collection($latest), 'Latest merchants retrieved successfully.');
     }
 
+    // Method to get the details of a single merchant
+    public function details(Merchant $merchant)
+    {
+        // Fetch 4 random merchants excluding the current one
+        $related = Merchant::where('id', '!=', $merchant->id)
+            ->inRandomOrder()
+            ->take(4)
+            ->get();
+
+        return ApiResponse::success([
+            'item' => new MerchantResource($merchant),
+            'related' => MerchantResource::collection($related),
+        ], 'Merchant details retrieved successfully.');
+    }
+
 }
