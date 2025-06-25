@@ -47,4 +47,10 @@ class ProductController extends Controller
 
         return ApiResponse::success(ProductResource::collection($latest), 'Latest products retrieved successfully.');
     }
+
+    // Method to get the details of a single product
+    public function details(Product $product)
+    {
+        return ApiResponse::success(new ProductResource($product), 'Product details retrieved successfully.');
+    }
 }
