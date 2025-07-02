@@ -52,7 +52,7 @@ class ProductController extends Controller
     public function details(Product $product)
     {
         // Fetch 4 random products excluding the current one
-        $related = Product::where('id', '!=', $product->id)
+        $related = Product::where('code', '!=', $product->code)
             ->inRandomOrder()
             ->take(4)
             ->get();
