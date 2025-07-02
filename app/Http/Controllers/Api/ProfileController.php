@@ -17,6 +17,24 @@ class ProfileController extends Controller
         );
     }
 
+    public function stats(Request $request)
+    {
+        $data = [
+            'balance' => 40.0,
+            'balance_goal' => 50.0,
+            'pending_cashback' => 14.35,
+            'products_earned' => 6,
+            'stores_earned' => 2,
+            'orders_count' => 12,
+            'currency' => 'EUR',
+        ];
+
+        return ApiResponse::success(
+            $data,
+            __('messages.stats_retrieved')
+        );
+    }
+
     public function update(Request $request)
     {
         $user = $request->user();
