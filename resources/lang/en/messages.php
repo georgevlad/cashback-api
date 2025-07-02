@@ -15,4 +15,6 @@ return [
     'invalid_credentials' => 'Invalid credentials provided.',
     'profile_retrieved' => 'User profile retrieved successfully.',
     'profile_updated' => 'User profile updated successfully.',
+    'stats_retrieved' => 'User stats retrieved successfully.',
+    'orders_retrieved' => 'User orders retrieved successfully.',
 ];
