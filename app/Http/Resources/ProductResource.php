@@ -9,7 +9,7 @@ class ProductResource extends JsonResource {
     public function toArray($request) {
         return [
             'name' => $this->name,
-            'code' => $this->code,
+            'code' => (string) $this->code,
             'description' => $this->description,
             'url' => $this->url,
             'image_url' => env('APP_URL') . '/images/latest-product-1.webp',
