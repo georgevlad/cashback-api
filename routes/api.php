@@ -17,6 +17,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 Route::middleware('auth:sanctum')->get('/user', [ProfileController::class, 'show']);
 Route::middleware('auth:sanctum')->put('/user', [ProfileController::class, 'update']);
 Route::middleware('auth:sanctum')->get('/user/stats', [ProfileController::class, 'stats']);
+Route::middleware('auth:sanctum')->get('/user/orders', [ProfileController::class, 'orders']);
 
 // Guest routes
 Route::middleware('guest')->group(function () {
