@@ -75,7 +75,7 @@ class ProductController extends Controller
                 'title' => $query . " " . $i,
                 'url' => 'https://example.com/products/' . $i,
                 'merchant' => 'Example Merchant',
-                'image' => 'https://example.com/images/product-' . $i . '.jpg',
+                //'image' => 'https://example.com/images/product-' . $i . '.jpg',
                 'price' => '$' . number_format(99.99 + $i, 2),
             ];
         }

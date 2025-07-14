@@ -64,7 +64,7 @@ Route::apiResource('products', ProductController::class)->only(['index', 'show']
 Route::get('/products-latest', [ProductController::class, 'latest']);
 Route::get('/products-featured', [ProductController::class, 'latest']); //TODO - implement featured flag
 Route::get('/products/{product}/details', [ProductController::class, 'details']);
-Route::get('/products/search', [ProductController::class, 'search']);
+Route::get('/products-search', [ProductController::class, 'search']);
 
 
 //TODO
