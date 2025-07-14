@@ -62,4 +62,24 @@ class ProductController extends Controller
             'related' => ProductResource::collection($related),
         ], 'Product details retrieved successfully.');
     }
+
+    // Dummy search endpoint
+    public function search(Request $request)
+    {
+        $query = $request->query('query', 'Product');
+        $limit = (int) $request->query('limit', 5);
+
+        $results = [];
+        for ($i = 1; $i <= $limit; $i++) {
+            $results[] = [
+                'title' => $query . " " . $i,
+                'url' => 'https://example.com/products/' . $i,
+                'merchant' => 'Example Merchant',
+                'image' => 'https://example.com/images/product-' . $i . '.jpg',
+                'price' => '$' . number_format(99.99 + $i, 2),
+            ];
+        }
+
+        return ApiResponse::success($results, 'Search results retrieved successfully.');
+    }
 }
