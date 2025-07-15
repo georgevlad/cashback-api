@@ -69,6 +69,11 @@ class ProductController extends Controller
         $query = $request->query('query', 'Product');
         $limit = (int) $request->query('limit', 5);
 
+        // Check if the query starts with 'a' or 'A' //TODO - implement real search logic
+        if (strtolower(substr($query, 0, 1)) === 'a') {
+            return ApiResponse::success([], 'Search results for queries starting with "A" are not available.');
+        }
+
         $results = [];
         for ($i = 1; $i <= $limit; $i++) {
             $results[] = [
