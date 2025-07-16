@@ -17,4 +17,5 @@ return [
     'profile_updated' => 'User profile updated successfully.',
     'stats_retrieved' => 'User stats retrieved successfully.',
     'orders_retrieved' => 'User orders retrieved successfully.',
+    'price_alert_subscribed' => "You'll be notified on your email when the price for this product changes.",
 ];

@@ -87,4 +87,13 @@ class ProductController extends Controller
 
         return ApiResponse::success($results, 'Search results retrieved successfully.');
     }
+
+    // Dummy price alert endpoint
+    public function priceAlert(Product $product)
+    {
+        return ApiResponse::success(
+            [],
+            "You'll be notified on your email when the price for this product changes."
+        );
+    }
 }
