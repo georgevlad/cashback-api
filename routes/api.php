@@ -65,7 +65,8 @@ Route::get('/products-latest', [ProductController::class, 'latest']);
 Route::get('/products-featured', [ProductController::class, 'latest']); //TODO - implement featured flag
 Route::get('/products/{product}/details', [ProductController::class, 'details']);
 Route::get('/products-search', [ProductController::class, 'search']);
-Route::middleware('auth:sanctum')->post('/products/{product}/price-alert', [ProductController::class, 'priceAlert']);
+
+Route::post('/products/{product}/price-alert', [ProductController::class, 'priceAlert']); //TODO - this must be protected by Sanctum token
 
 
 //TODO
