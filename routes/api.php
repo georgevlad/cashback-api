@@ -60,12 +60,12 @@ Route::get('/merchants-latest', [MerchantController::class, 'latest']);
 Route::get('/merchants-featured', [MerchantController::class, 'latest']); //TODO - implement featured flag
 Route::get('/merchants/{merchant}/details', [MerchantController::class, 'details']);
 
+//TODO - for now the products routes are not used by the web app, we'll come back to them later
 Route::apiResource('products', ProductController::class)->only(['index', 'show']);
 Route::get('/products-latest', [ProductController::class, 'latest']);
 Route::get('/products-featured', [ProductController::class, 'latest']); //TODO - implement featured flag
 Route::get('/products/{product}/details', [ProductController::class, 'details']);
 Route::get('/products-search', [ProductController::class, 'search']);
-
 Route::post('/products/{product}/price-alert', [ProductController::class, 'priceAlert']); //TODO - this must be protected by Sanctum token
 
 
