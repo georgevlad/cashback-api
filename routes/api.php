@@ -57,7 +57,8 @@ Route::get('/categories/{category}/details', [CategoryController::class, 'detail
 
 Route::apiResource('merchants', MerchantController::class)->only(['index', 'show']);
 Route::get('/merchants-latest', [MerchantController::class, 'latest']);
-Route::get('/merchants-featured', [MerchantController::class, 'latest']); //TODO - implement featured flag
+Route::get('/merchants-featured', [MerchantController::class, 'latest']); //TODO - implement featured for homepage flag
+Route::get('/merchants-featured-stores', [MerchantController::class, 'featuredStores']);
 Route::get('/merchants/{merchant}/details', [MerchantController::class, 'details']);
 
 //TODO - for now the products routes are not used by the web app, we'll come back to them later

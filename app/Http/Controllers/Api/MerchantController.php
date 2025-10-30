@@ -48,6 +48,14 @@ class MerchantController extends Controller
         return ApiResponse::success(MerchantResource::collection($latest), 'Latest merchants retrieved successfully.');
     }
 
+    public function featuredStores()
+    {
+        //Take five random stores as featured - TODO - implement featured flag in DB
+        $featured = Merchant::inRandomOrder()->take(5)->get();
+
+        return ApiResponse::success(MerchantResource::collection($featured), 'Featured stores retrieved successfully.');
+    }
+
     // Method to get the details of a single merchant
     public function details(Merchant $merchant)
     {
