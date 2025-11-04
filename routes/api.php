@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CashbackTestController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\MerchantController;
@@ -69,6 +70,9 @@ Route::get('/products/{product}/details', [ProductController::class, 'details'])
 Route::get('/products-search', [ProductController::class, 'search']);
 Route::post('/products/{product}/price-alert', [ProductController::class, 'priceAlert']); //TODO - this must be protected by Sanctum token
 
+// Cashback test endpoints
+Route::post('/cashback-test/purchase', [CashbackTestController::class, 'purchase']);
+Route::post('/cashback-test/settle-transaction', [CashbackTestController::class, 'settleTransaction']);
 
 //TODO
 /**
